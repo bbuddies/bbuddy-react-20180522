@@ -9,6 +9,7 @@ export default class AddAccountPage extends React.Component {
     let name = this.refs.name.getValue()
     let balance = this.refs.balance.getValue()
     this.props.addAccount({name, balance})
+    this.href = '/budget/list'
   }
   render() {
     return (
