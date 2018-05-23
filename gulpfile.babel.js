@@ -21,7 +21,8 @@ gulp.task("default", ["server", "mocha"], () => {
 });
 
 gulp.task("mocha", () => {
-  return gulp.src(['test/**/*.js'], {read: false})
+  // return gulp.src(['test/**/*.js'], {read: false})
+  return gulp.src(['test/budget/*.js'], {read: false})
     .pipe(mocha())
     .on('error', gutil.log)
     .on('error', notify.onError("Error: <%= error.message %>"));
