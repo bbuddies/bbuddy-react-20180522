@@ -25,32 +25,24 @@ export function search(start, end){
 
   var budgets = getBudgets();
 
-  var items = [];
-  var index = 0;
   budgets.forEach(budget => {
     var date = moment(budget.month, dateFormat);
     if(moment(date).isSameOrAfter(startDate) && moment(date).isSameOrBefore(endDate)) {
-      items[index] = budget;
-      index++;
+      var dayOfMonth = moment(budget.month).daysInMonth();
+
+      var range = dayOfMonth;
+      if(moment(startDate).isSame(endDate)) {
+        range = endDay - startDay + 1;
+      } else if(moment(date).isSame(startDate)) {
+        range = dayOfMonth - startDay + 1;
+      } else if(moment(date).isSame(endDate)) {
+        range = endDay;
+      } else {
+        range = dayOfMonth;
+      }
+
+      result += (budget.amount / dayOfMonth) * range;
     }
-  })
-
-  items.forEach(budget => {
-    var date = moment(budget.month, dateNoDayFormat);
-    var dayOfMonth = moment(budget.month).daysInMonth();
-
-    var range = dayOfMonth;
-    if(moment(startDate).isSame(endDate)) {
-      range = endDay - startDay + 1;
-    } else if(moment(date).isSame(startDate)) {
-      range = dayOfMonth - startDay + 1;
-    } else if(moment(date).isSame(endDate)) {
-      range = endDay;
-    } else {
-      range = dayOfMonth;
-    }
-
-    result += (budget.amount / dayOfMonth) * range;
   })
 
   return result;
